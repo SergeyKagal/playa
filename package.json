@@ -1,0 +1,19 @@
+{
+  "name": "playa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeyKagal/playa.git"
+  },
+  "author": "Sergey Kagal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SergeyKagal/playa/issues"
+  },
+  "homepage": "https://github.com/SergeyKagal/playa#readme"
+}
