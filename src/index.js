@@ -2,17 +2,17 @@ import './style/style.scss';
 
 const b1 = document.querySelector('.b1');
 const b2 = document.querySelector('.b2');
+const timeOnScreen = document.getElementById('time');
 const screenWidth = window.innerWidth - b1.clientWidth - 20;
 const screenHeight = window.innerHeight - b1.clientHeight - 20;
 const PI = Math.PI;
 
-const duration = 250000;
+const duration = 10000;
 
 const options = {
   x: 0,
   speed: 5,
   direction: -1,
-  duration: 10000,
 
   changeDirection() {
     if (this.x > screenWidth || this.x < 0) {
@@ -57,8 +57,9 @@ const animB1ByX = () => {
     return;
   }
   requestAnimationFrame(animB1ByX);
-
-  console.log(time - now);
+  timeOnScreen.children[0].textContent = `: ${((time - now) / 1000).toFixed(
+    1
+  )}`;
 };
 
 animB1ByX();
