@@ -1,4 +1,6 @@
-const PI = Math.PI;
+import { getDirection } from './getDirection';
+
+export const PI = Math.PI;
 
 export class Obj2d {
   constructor(
@@ -46,35 +48,33 @@ export class Obj2d {
 
     return result;
   }
+
+  moveFromToBySpeed(from, to, dt, speed) {
+    const result = [];
+    let time = 0;
+    this.posX = from.x;
+    this.posY = from.y;
+    result.push({ time: time, currentX: this.posX, currentY: this.posY });
+    const deltaX = to.x - from.x;
+    const deltaY = to.y - from.y;
+    this.direction = getDirection(deltaX, deltaY);
+    let distance = Math.sqrt(deltaY ** 2 + deltaX ** 2);
+    let ds = dt * speed;
+    console.log(ds, distance);
+    this.dx = Math.cos(this.direction) * speed * dt;
+    this.dy = Math.sin(this.direction) * speed * dt;
+    while (distance > 0) {
+      distance -= ds;
+      this.posX += this.dx;
+      this.posY += this.dy;
+      result.push({
+        time: (time += dt),
+        currentX: this.posX,
+        currentY: this.posY,
+      });
+    }
+    return result;
+  }
 }
 
 export const o1 = new Obj2d();
-
-function getDirection(deltaX, deltaY) {
-  if (deltaX > 0 && deltaY === 0) {
-    return 0;
-  }
-  if (deltaX < 0 && deltaY === 0) {
-    return PI;
-  }
-  if (deltaX === 0 && deltaY > 0) {
-    return PI / 2;
-  }
-  if (deltaX === 0 && deltaY < 0) {
-    return (PI * 3) / 2;
-  }
-  if (deltaX > 0 && deltaY > 0) {
-    return Math.atan(deltaY / deltaX);
-  }
-  if (deltaX < 0 && deltaY > 0) {
-    return Math.atan(Math.abs(deltaY / deltaX)) + PI / 2;
-  }
-  if (deltaX < 0 && deltaY < 0) {
-    console.log('***');
-    return Math.atan(deltaY / deltaX) + PI;
-  }
-  if (deltaX > 0 && deltaY < 0) {
-    return PI * 2 - Math.atan(Math.abs(deltaY / deltaX));
-  }
-  return 0;
-}
