@@ -6,7 +6,7 @@ const screenWidth = window.innerWidth - b1.clientWidth - 20;
 const screenHeight = window.innerHeight - b1.clientHeight - 20;
 const PI = Math.PI;
 
-const duration = 2500;
+const duration = 250000;
 
 const options = {
   x: 0,
@@ -22,7 +22,7 @@ const options = {
 };
 
 const roundOption = {
-  radius: 100,
+  radius: -100,
   fi: 0,
   angleSpeed: 0.05,
   get x() {
