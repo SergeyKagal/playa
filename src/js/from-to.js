@@ -20,8 +20,8 @@ export class Obj2d {
     this.dx = 0;
     this.dy = 0;
   }
-
-  //from{x:0,y:0},to{x:200,y:340},dt=100(ms),duration=12000(ms)
+  //Функция моделирует движение из одной заданной точки в другую за определенное время, принимает в качестве параметров координаты начальной и конечной точек, продолжительность интервалов времени и продолжительность времени движения. Функция возвращает массив объектов содержащих текущее время и координаты объекта.
+  //from{x:0,y:0},to{x:200,y:340},dt=100(ms),duration=12000(ms)---пример параметров
   simpleMove(from, to, dt, duration) {
     const result = [];
     let time = 0;
@@ -45,33 +45,45 @@ export class Obj2d {
         currentY: Math.round(this.posY),
       });
     }
-
     return result;
   }
-
+  //Функция моделирует движение из одной заданной точки в другую с заданной постоянной скоростью, принимает в качестве параметров координаты начальной и конечной точек, продолжительность интервалов времени и модуль скорости. Функция возвращает массив объектов содержащих текущее время и координаты объекта.
+  //from{x:0,y:0},to{x:200,y:340},dt=100(ms), speed=1 ---пример параметров
   moveFromToBySpeed(from, to, dt, speed) {
-    const result = [];
-    let time = 0;
-    this.posX = from.x;
-    this.posY = from.y;
-    result.push({ time: time, currentX: this.posX, currentY: this.posY });
     const deltaX = to.x - from.x;
     const deltaY = to.y - from.y;
-    this.direction = getDirection(deltaX, deltaY);
     let distance = Math.sqrt(deltaY ** 2 + deltaX ** 2);
-    let ds = dt * speed;
-    console.log(ds, distance);
-    this.dx = Math.cos(this.direction) * speed * dt;
-    this.dy = Math.sin(this.direction) * speed * dt;
-    while (distance > 0) {
-      distance -= ds;
-      this.posX += this.dx;
-      this.posY += this.dy;
+    let duration = distance / speed;
+    return this.simpleMove(from, to, dt, duration);
+  }
+
+  // Функция движение из заданной точки с постоянным ускорением, возвращает массив объектов содержащих текущее время, координаты в данный момент времени, текущую скорость.
+  //принимаемые параметры - коодинаты стартовой точки, dt - продолжительность промежутка времени(интервал), напрвление движения в градусах, начальная скорость, ускорение, продолжительность движения
+  //from{x:3,y;4},dt=100(ms),direction=45(градусы),startSpeed=0,axel=3,duration=12000(ms) - пример параметров
+  moveFromDir(from, dt, direction, startSpeed, axel, duration) {
+    const result = [];
+
+    let currentTime = 0;
+    this.posX = from.x;
+    this.posY = from.y;
+    this.speed = startSpeed;
+    while (currentTime <= duration) {
+      this.speed = startSpeed + currentTime * axel;
+      this.posX =
+        from.x +
+        (startSpeed + (axel * currentTime ** 2) / 2) *
+          Math.cos((direction * PI) / 180);
+      this.posY =
+        from.y +
+        (startSpeed + (axel * currentTime ** 2) / 2) *
+          Math.sin((direction * PI) / 180);
       result.push({
-        time: (time += dt),
+        currentTime: currentTime,
         currentX: this.posX,
         currentY: this.posY,
+        currentSpeed: this.speed,
       });
+      currentTime += dt;
     }
     return result;
   }

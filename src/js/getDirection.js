@@ -20,7 +20,6 @@ export const getDirection = (deltaX, deltaY) => {
     return Math.atan(Math.abs(deltaY / deltaX)) + PI / 2;
   }
   if (deltaX < 0 && deltaY < 0) {
-    console.log('***');
     return Math.atan(deltaY / deltaX) + PI;
   }
   if (deltaX > 0 && deltaY < 0) {
