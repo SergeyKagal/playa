@@ -60,23 +60,23 @@ export class Obj2d {
   // Функция движение из заданной точки с постоянным ускорением, возвращает массив объектов содержащих текущее время, координаты в данный момент времени, текущую скорость.
   //принимаемые параметры - коодинаты стартовой точки, dt - продолжительность промежутка времени(интервал), напрвление движения в градусах, начальная скорость, ускорение, продолжительность движения
   //from{x:3,y;4},dt=100(ms),direction=45(градусы),startSpeed=0,axel=3,duration=12000(ms) - пример параметров
-  moveFromDir(from, dt, direction, startSpeed, axel, duration) {
+  moveFromDirAxel(from, dt, direction, startSpeed, axel, duration) {
     const result = [];
-
     let currentTime = 0;
-    this.posX = from.x;
-    this.posY = from.y;
-    this.speed = startSpeed;
     while (currentTime <= duration) {
       this.speed = startSpeed + currentTime * axel;
       this.posX =
         from.x +
-        (startSpeed + (axel * currentTime ** 2) / 2) *
-          Math.cos((direction * PI) / 180);
+        Math.cos((direction * PI) / 180) *
+          currentTime *
+          (startSpeed + (axel * currentTime) / 2);
+
       this.posY =
         from.y +
-        (startSpeed + (axel * currentTime ** 2) / 2) *
-          Math.sin((direction * PI) / 180);
+        Math.sin((direction * PI) / 180) *
+          currentTime *
+          (startSpeed + (axel * currentTime) / 2);
+
       result.push({
         currentTime: currentTime,
         currentX: this.posX,
@@ -86,6 +86,23 @@ export class Obj2d {
       currentTime += dt;
     }
     return result;
+  }
+
+  // Функция моделирует торможение , принимает в качестве параметров координаты начальной точки, длительность интервала времени, направление в градусах, модуль скорости, ускорение(должно быть отрицательным), возвращает массив объектов содержащих текущее время, координаты в данный момент времени, текущую скорость.
+  moveFromDirBraking(from, dt, direction, startSpeed, axel) {
+    if (axel >= 0 || startSpeed <= 0 || dt <= 0) {
+      console.log('Wrong parameters');
+      return [{ currentTime: 0, currentX: from.x, currentY: from.y }];
+    }
+    let duration = Math.abs(startSpeed / axel);
+    return this.moveFromDirAxel(
+      from,
+      dt,
+      direction,
+      startSpeed,
+      axel,
+      duration
+    );
   }
 }
 
