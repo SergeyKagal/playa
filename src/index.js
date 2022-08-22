@@ -1,3 +1,4 @@
+import { animB1ByX } from './js/anim';
 import { MyCollection } from './js/collection';
 import { Obj2d } from './js/from-to';
 import './style/style.scss';
@@ -30,3 +31,10 @@ console.log(myCol.size); // 3
 myCol.removeByKey('name');
 console.log(myCol); // {storage: Array(2)}
 console.log(myCol.size); // 2
+
+export const b1 = document.querySelector('.b1');
+export const b2 = document.querySelector('.b2');
+export const screenWidth = window.innerWidth - b1.clientWidth - 20;
+export const screenHeight = window.innerHeight - b1.clientHeight - 20;
+export const startTime = Date.now();
+animB1ByX();
