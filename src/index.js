@@ -32,6 +32,9 @@ myCol.removeByKey('name');
 console.log(myCol); // {storage: Array(2)}
 console.log(myCol.size); // 2
 
+// анимируем 2 дива
+// 1й челночное движение по х скорость постоянная
+// 2й движение по окружности с постоянной скоростью и вращением
 export const b1 = document.querySelector('.b1');
 export const b2 = document.querySelector('.b2');
 export const screenWidth = window.innerWidth - b1.clientWidth - 20;
