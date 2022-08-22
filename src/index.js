@@ -7,3 +7,4 @@ console.log(
 );
 console.log(o1.moveFromDirAxel({ x: 0, y: 0 }, 10, 45, 10, -1, 50));
 console.log(o1.moveFromDirBraking({ x: 10, y: 22 }, 1, 45, 10, -1));
+console.log(o1.rotate(-307, 3, 1));

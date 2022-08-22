@@ -104,6 +104,39 @@ export class Obj2d {
       duration
     );
   }
+  // поворот вокруг собственной оси - принимаемые параметры: угол поворота(градусы), угловая скорость (градусы/сек), длительность интервалов времени (сек)
+  rotate(angle, anglSpeed, dt) {
+    this.direction = 0;
+    const sign = angle / Math.abs(angle);
+    const result = [];
+
+    let currentTime = 0;
+    let time = Math.abs(angle / anglSpeed);
+    let steps = Math.floor(time / dt);
+    const lastStepDuration = time % dt;
+    const tmp = this.direction;
+    for (let stepNum = 0; stepNum <= steps; stepNum++) {
+      currentTime = dt * stepNum;
+      this.direction = currentTime * Math.abs(anglSpeed) * sign + tmp;
+      result.push({
+        currentTime: currentTime,
+        currentAngle: this.direction % 360,
+      });
+    }
+    if (lastStepDuration) {
+      currentTime += lastStepDuration;
+      this.direction = currentTime * Math.abs(anglSpeed) * sign + tmp;
+      result.push({
+        currentTime: currentTime,
+        currentAngle: this.direction % 360,
+      });
+    }
+
+    this.direction >= 0
+      ? (this.direction %= 360)
+      : (this.direction = 360 - Math.abs(this.direction % 360));
+    return result;
+  }
 }
 
 export const o1 = new Obj2d();
