@@ -1,5 +1,10 @@
-import { o1 } from './js/from-to';
+import { MyCollection } from './js/collection';
+import { Obj2d } from './js/from-to';
 import './style/style.scss';
+
+// тест функций управления 2д объектом
+
+const o1 = new Obj2d();
 
 console.log(o1.simpleMove({ x: -10, y: -15 }, { x: 120, y: -150 }, 3, 1000));
 console.log(
@@ -8,3 +13,20 @@ console.log(
 console.log(o1.moveFromDirAxel({ x: 0, y: 0 }, 10, 45, 10, -1, 50));
 console.log(o1.moveFromDirBraking({ x: 10, y: 22 }, 1, 45, 10, -1));
 console.log(o1.rotate(100, 25, 1));
+
+//-- тест методов коллекции
+
+const myCol = new MyCollection();
+
+myCol.set('asd', 34);
+myCol.set('asd', 78);
+myCol.set('name', 'Sergey');
+
+console.log(myCol.has('asd')); // true
+console.log(myCol.has('wer')); // false
+console.log(myCol.hasIndex(2)); // true
+console.log(myCol.get('asd')); // [34,78]
+console.log(myCol.size); // 3
+myCol.removeByKey('name');
+console.log(myCol); // {storage: Array(2)}
+console.log(myCol.size); // 2

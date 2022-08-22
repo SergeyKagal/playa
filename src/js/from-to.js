@@ -138,5 +138,3 @@ export class Obj2d {
     return result;
   }
 }
-
-export const o1 = new Obj2d();
